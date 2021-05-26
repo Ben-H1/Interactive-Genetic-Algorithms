@@ -1,0 +1,23 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    background: rgb(32, 32, 32);
+    color:      rgb(255, 255, 255);
+
+    margin: 0px;
+}
+
+$headerGradientTop: rgb(90, 90, 90);
+
+#headerContainer {
+    background-image: linear-gradient(rgb(90, 90, 90), rgb(44, 44, 44));
+
+    width:  100%;
+    height: 50px;
+
+    
+}
+
+#websiteName {
+
+}

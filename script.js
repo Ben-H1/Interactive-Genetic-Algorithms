@@ -301,7 +301,6 @@ function run() {
 
 function runSimulation() {
     step();
-    steps++;
 
     if (getFitness(population[0]) == 0) {
         stop();
@@ -320,6 +319,7 @@ function step() {
     generateNewPopulation();
     sortPopulationByFitness();
     updatePopulationDisplay();
+    steps++;
 }
 
 function cullPopulation() {
