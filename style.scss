@@ -1,23 +1,82 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-    background: rgb(32, 32, 32);
+    background: rgb(24, 24, 24);
     color:      rgb(255, 255, 255);
 
     margin: 0px;
 }
 
-$headerGradientTop: rgb(90, 90, 90);
+$header-gradient-top:    rgb(72, 72, 72);
+$header-gradient-bottom: rgb(38, 38, 38);
+$header-gradient: linear-gradient($header-gradient-top, $header-gradient-bottom);
+
+$header-height: 50px;
+$padding: 10px;
+
+$button-gradient-top:    rgb(54, 54, 54);
+$button-gradient-bottom: rgb(20, 20, 20);
+$button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom);
 
 #headerContainer {
-    background-image: linear-gradient(rgb(90, 90, 90), rgb(44, 44, 44));
+    background-image: $header-gradient;
+
+    display: flex;
 
     width:  100%;
-    height: 50px;
+    height: $header-height;
 
-    
+    align-items: center;
+    justify-content: space-between;
+
+    #websiteName {
+        display: inline-block;
+
+        margin-left: $padding;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    #headerButtonContainer {
+        display: inline-block;
+
+        margin-right: $padding;
+    }
+
+    input[type=button] {
+        background-image: $button-gradient;
+
+        color: inherit;
+        border: 1px solid white;
+        border-radius: 5px;
+
+        padding: 4px;
+        margin-left: 5px;
+
+        &:hover {
+            background-image: $header-gradient;
+        }
+
+        &:active {
+            background: black;
+        }
+    }
 }
 
-#websiteName {
+#footerContainer {
+    position: fixed;
 
+    bottom: 0px;
+    width: 100%;
+
+    #authorName {
+        float: right;
+
+        margin-right:  $padding;
+        margin-bottom: $padding;
+    }
+}
+
+#algorithmOptionsContainer {
+    padding: $padding;
 }

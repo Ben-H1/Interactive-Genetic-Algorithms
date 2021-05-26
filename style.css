@@ -1,14 +1,56 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #202020;
+  background: #181818;
   color: white;
   margin: 0px;
 }
 
 #headerContainer {
-  background-image: linear-gradient(#5a5a5a, #2c2c2c);
+  background-image: linear-gradient(#484848, #262626);
+  display: flex;
   width: 100%;
   height: 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+#headerContainer #websiteName {
+  display: inline-block;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+#headerContainer #headerButtonContainer {
+  display: inline-block;
+  margin-right: 10px;
+}
+#headerContainer input[type=button] {
+  background-image: linear-gradient(#363636, #141414);
+  color: inherit;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 5px;
+}
+#headerContainer input[type=button]:hover {
+  background-image: linear-gradient(#484848, #262626);
+}
+#headerContainer input[type=button]:active {
+  background: black;
+}
+
+#footerContainer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+#footerContainer #authorName {
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#algorithmOptionsContainer {
+  padding: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
