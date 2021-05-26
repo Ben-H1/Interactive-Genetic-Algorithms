@@ -292,21 +292,16 @@ function getFitness(solution) {
 }
 
 var interval = null;
+var steps = 0;
 
 function run() {
     console.log(`run`);
-
     interval = setInterval(runSimulation, 10);
-
-    //var topFitness = 100;
-    //while (topFitness != 0) {
-    //    step();
-    //    topFitness = getFitness(population[0]);
-    //}
 }
 
 function runSimulation() {
     step();
+    steps++;
 
     if (getFitness(population[0]) == 0) {
         stop();
@@ -315,8 +310,9 @@ function runSimulation() {
 
 function stop() {
     console.log(`stop`);
-
     clearInterval(interval);
+    console.log(steps);
+    steps = 0;
 }
 
 function step() {
