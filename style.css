@@ -38,6 +38,19 @@ body {
   background: black;
 }
 
+#algorithmOptionsContainer, #fitnessFunctionContainer {
+  padding: 10px;
+  float: left;
+}
+
+.slider {
+  vertical-align: middle;
+}
+
+.display {
+  width: 65px;
+}
+
 #footerContainer {
   position: fixed;
   bottom: 0px;
@@ -47,10 +60,6 @@ body {
   float: right;
   margin-right: 10px;
   margin-bottom: 10px;
-}
-
-#algorithmOptionsContainer {
-  padding: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

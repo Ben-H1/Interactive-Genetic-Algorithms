@@ -1,242 +1,92 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            .slider {
-
-            }
-            .display {
-
-            }
-
-            #populationTable {
-                border-collapse: collapse;
-            }
-            .populationHeader, .solutionBox, .solutionIndex, .xBox, .solutionFitness {
-                border: 1px solid black;
-                padding: 1px 2px;
-            }
-            .populationHeader {
-                
-            }
-            .solutionBox {
-                
-            }
-            .solutionIndex {
-                
-            }
-            .xBox {
-                
-            }
-            .solutionFitness {
-                
-            }
-        </style>
-
+        <link rel="stylesheet" href="style.css" />
         <title>Interactive Genetic Algorithms</title>
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     </head>
+
     <body>
-        <div>Algorithm Options</div>
-        <div id="optionsBlock">
-            <table>
-                <tr id="chanceToCrossoverBlock">
-                    <td>
-                        <span>Chance to crossover:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0" max="100" step="1" id="chanceToCrossoverSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="chanceToCrossoverDisplay" class="display"></span>
-                    </td>
-                </tr>
+        <div id="headerContainer">
+            <div id="websiteName">Interactive Genetic Algorithms</div>
 
-                <tr id="chanceToMutateBlock">
-                    <td>
-                        <span>Chance to mutate:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0" max="100" step="1" id="chanceToMutateSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="chanceToMutateDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="chanceToGoUpBlock">
-                    <td>
-                        <span>Chance to go up:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0" max="100" step="1" id="chanceToGoUpSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="chanceToGoUpDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="chanceToGoDownBlock">
-                    <td>
-                        <span>Chance to go down:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0" max="100" step="1" id="chanceToGoDownSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="chanceToGoDownDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="minimumChangeBlock">
-                    <td>
-                        <span>Minimum change:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0.1" max="10" step="0.1" id="minimumChangeSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="minimumChangeDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="maximumChangeBlock">
-                    <td>
-                        <span>Maximum change:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0.1" max="10" step="0.1" id="maximumChangeSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="maximumChangeDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="decimalPlacesBlock">
-                    <td>
-                        <span>Decimal places:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="0" max="10" step="1" id="decimalPlacesSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="decimalPlacesDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="populationSizeBlock">
-                    <td>
-                        <span>Population size:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="1" max="100" step="1" id="populationSizeSlider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="populationSizeDisplay" class="display"></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div>Fitness Function</div>
-        <div id="fitnessFunctionBlock">
-            <table>
-                <tr id="x1Block">
-                    <td>
-                        <span>\(x_1\) goal:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="-10" max="10" step="0.1" id="x1Slider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="x1SliderDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="x2Block">
-                    <td>
-                        <span>\(x_2\) goal:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="-10" max="10" step="0.1" id="x2Slider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="x2SliderDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="x3Block">
-                    <td>
-                        <span>\(x_3\) goal:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="-10" max="10" step="0.1" id="x3Slider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="x3SliderDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="x4Block">
-                    <td>
-                        <span>\(x_4\) goal:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="-10" max="10" step="0.1" id="x4Slider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="x4SliderDisplay" class="display"></span>
-                    </td>
-                </tr>
-
-                <tr id="x5Block">
-                    <td>
-                        <span>\(x_5\) goal:</span>
-                    </td>
-                    <td>
-                        <input type="range" min="-10" max="10" step="0.1" id="x5Slider" class="slider" />
-                    </td>
-                    <td>
-                        <span id="x5SliderDisplay" class="display"></span>
-                    </td>
-                </tr>
-            </table>
-
-            <div>
-                <span>\(f(x) = (\)</span>
-                <span id="x1Display"></span> <span>\(- x_1) + (\)</span>
-                <span id="x2Display"></span> <span>\(- x_2) + (\)</span>
-                <span id="x3Display"></span> <span>\(- x_3) + (\)</span>
-                <span id="x4Display"></span> <span>\(- x_4) + (\)</span>
-                <span id="x5Display"></span> <span>\(- x_5)\)</span>
+            <div id="headerButtonContainer">
+                <input id="saveSettingsButton" type="button" value="Save Settings" />
+                <input id="loadSettingsButton" type="button" value="Load Settings" />
             </div>
         </div>
 
-        <div>Buttons</div>
-        <div id="buttonsBlock">
-            <input type="button" value="Generate initial population" id="generateInitialPopulationButton" class="button" />
-            <input type="button" value="Run"                         id="runButton"                       class="button" />
-            <input type="button" value="Step"                        id="stepButton"                      class="button" />
-            <input type="button" value="Stop"                        id="stopButton"                      class="button" />
+        <div id="algorithmOptionsContainer">
+            <div id="algorithmOptionsTitle">Algorithm Options</div>
+
+            <div id="algorithmOptionsBlock">
+                <table id="algorithmOptionsTable">
+                    <tr id="chanceToCrossoverBlock">
+                        <td><span>Chance to crossover:</span></td>
+                        <td><input id="chanceToCrossoverSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                        <td><input id="chanceToCrossoverDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                        <td><span>%</span></td>
+                    </tr>
+                    <tr id="chanceToMutateBlock">
+                        <td><span>Chance to mutate:</span></td>
+                        <td><input id="chanceToMutateSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                        <td><input id="chanceToMutateDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                        <td><span>%</span></td>
+                    </tr>
+                    <tr id="chanceToGoUpBlock">
+                        <td><span>Chance to go up:</span></td>
+                        <td><input id="chanceToGoUpSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
+                        <td><input id="chanceToGoUpDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
+                        <td><span>%</span></td>
+                    </tr>
+                    <tr id="chanceToGoDownBlock">
+                        <td><span>Chance to go down:</span></td>
+                        <td><input id="chanceToGoDownSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
+                        <td><input id="chanceToGoDownDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
+                        <td><span>%</span></td>
+                    </tr>
+                    <tr id="minimumChangeBlock">
+                        <td><span>Minimum change:</span></td>
+                        <td><input id="minimumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
+                        <td><input id="minimumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
+                    </tr>
+                    <tr id="maximumChangeBlock">
+                        <td><span>Maximum change:</span></td>
+                        <td><input id="maximumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
+                        <td><input id="maximumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
+                    </tr>
+                    <tr id="decimalPlacesBlock">
+                        <td><span>Decimal places:</span></td>
+                        <td><input id="decimalPlacesSlider"  class="slider"  type="range"  min="0" max="5" step="1" /></td>
+                        <td><input id="decimalPlacesDisplay" class="display" type="number" min="0" max="5" step="1" /></td>
+                        <td><span>decimal places</span></td>
+                    </tr>
+                    <tr id="populationSizeBlock">
+                        <td><span>Population size:</span></td>
+                        <td><input id="populationSizeSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                        <td><input id="populationSizeDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                    </tr>
+                    <tr id="solutionSizeBlock">
+                        <td><span>Solution size:</span></td>
+                        <td><input id="solutionSizeSlider"  class="slider"  type="range"  min="1" max="10" step="1" /></td>
+                        <td><input id="solutionSizeDisplay" class="display" type="number" min="1" max="10" step="1" /></td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
-        <div>Population</div>
-        <div id="populationBlock">
-            <table id="populationTable">
-                <tr>
-                    <th class="populationHeader">Index</th>
-                    <th class="populationHeader">\(\boldsymbol{x_1}\)</th>
-                    <th class="populationHeader">\(\boldsymbol{x_2}\)</th>
-                    <th class="populationHeader">\(\boldsymbol{x_3}\)</th>
-                    <th class="populationHeader">\(\boldsymbol{x_4}\)</th>
-                    <th class="populationHeader">\(\boldsymbol{x_5}\)</th>
-                    <th class="populationHeader">Fitness</th>
-                </tr>
-            </table>
+        <div id="fitnessFunctionContainer">
+            <div id="fitnessFunctionTitle">Fitness Function</div>
+
+            <div id="fitnessFunctionBlock">
+                <table id="fitnessFunctionTable">
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footerContainer">
+            <div id="authorName">Created by Benedict Hawthorn</div>
         </div>
 
         <script src="script.js"></script>

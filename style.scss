@@ -63,6 +63,19 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
     }
 }
 
+#algorithmOptionsContainer, #fitnessFunctionContainer {
+    padding: $padding;
+    float: left;
+}
+
+.slider {
+    vertical-align: middle;
+}
+
+.display {
+    width: 65px;
+}
+
 #footerContainer {
     position: fixed;
 
@@ -75,8 +88,4 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
         margin-right:  $padding;
         margin-bottom: $padding;
     }
-}
-
-#algorithmOptionsContainer {
-    padding: $padding;
 }
