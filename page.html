@@ -11,8 +11,9 @@
             <div id="websiteName">Interactive Genetic Algorithms</div>
 
             <div id="headerButtonContainer">
-                <input id="saveSettingsButton" type="button" value="Save Settings" />
-                <input id="loadSettingsButton" type="button" value="Load Settings" />
+                <input id="saveSettingsButton" class="button" type="button" value="Save Settings" />
+                <input id="loadSettingsButton" class="button" type="button" value="Load Settings" />
+                <input id="loadFile" type="file" />
             </div>
         </div>
 
@@ -76,12 +77,21 @@
         </div>
 
         <div id="fitnessFunctionContainer">
-            <div id="fitnessFunctionTitle">Fitness Function</div>
+            <div id="fitnessFunctionTitle">Fitness Function Options</div>
 
-            <div id="fitnessFunctionBlock">
-                <table id="fitnessFunctionTable">
+            <div id="fitnessFunctionOptionsBlock">
+                <table id="fitnessFunctionOptionsTable">
 
                 </table>
+            </div>
+
+            <br />
+
+            <div id="fitnessFunctionBlock">
+                <span>\( f(x) = \)</span>
+                <span id="fitnessFunctionDisplayBlock">
+
+                </span>
             </div>
         </div>
 

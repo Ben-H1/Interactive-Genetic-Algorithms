@@ -43,7 +43,7 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
         margin-right: $padding;
     }
 
-    input[type=button] {
+    .button {
         background-image: $button-gradient;
 
         color: inherit;
@@ -61,6 +61,10 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
             background: black;
         }
     }
+    
+    #loadFile {
+        display: none;
+    }
 }
 
 #algorithmOptionsContainer, #fitnessFunctionContainer {
@@ -70,10 +74,15 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
 
 .slider {
     vertical-align: middle;
+    width: 200px;
 }
 
 .display {
-    width: 65px;
+    width: 70px;
+}
+
+.mathsDisplay {
+
 }
 
 #footerContainer {
