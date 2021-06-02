@@ -17,81 +17,127 @@
             </div>
         </div>
 
-        <div id="algorithmOptionsContainer">
-            <div id="algorithmOptionsTitle">Algorithm Options</div>
-
-            <div id="algorithmOptionsBlock">
-                <table id="algorithmOptionsTable">
-                    <tr id="chanceToCrossoverBlock">
-                        <td><span>Chance to crossover:</span></td>
-                        <td><input id="chanceToCrossoverSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
-                        <td><input id="chanceToCrossoverDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
-                        <td><span>%</span></td>
-                    </tr>
-                    <tr id="chanceToMutateBlock">
-                        <td><span>Chance to mutate:</span></td>
-                        <td><input id="chanceToMutateSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
-                        <td><input id="chanceToMutateDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
-                        <td><span>%</span></td>
-                    </tr>
-                    <tr id="chanceToGoUpBlock">
-                        <td><span>Chance to go up:</span></td>
-                        <td><input id="chanceToGoUpSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
-                        <td><input id="chanceToGoUpDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
-                        <td><span>%</span></td>
-                    </tr>
-                    <tr id="chanceToGoDownBlock">
-                        <td><span>Chance to go down:</span></td>
-                        <td><input id="chanceToGoDownSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
-                        <td><input id="chanceToGoDownDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
-                        <td><span>%</span></td>
-                    </tr>
-                    <tr id="minimumChangeBlock">
-                        <td><span>Minimum change:</span></td>
-                        <td><input id="minimumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
-                        <td><input id="minimumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
-                    </tr>
-                    <tr id="maximumChangeBlock">
-                        <td><span>Maximum change:</span></td>
-                        <td><input id="maximumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
-                        <td><input id="maximumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
-                    </tr>
-                    <tr id="decimalPlacesBlock">
-                        <td><span>Decimal places:</span></td>
-                        <td><input id="decimalPlacesSlider"  class="slider"  type="range"  min="0" max="5" step="1" /></td>
-                        <td><input id="decimalPlacesDisplay" class="display" type="number" min="0" max="5" step="1" /></td>
-                        <td><span>decimal places</span></td>
-                    </tr>
-                    <tr id="populationSizeBlock">
-                        <td><span>Population size:</span></td>
-                        <td><input id="populationSizeSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
-                        <td><input id="populationSizeDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
-                    </tr>
-                    <tr id="solutionSizeBlock">
-                        <td><span>Solution size:</span></td>
-                        <td><input id="solutionSizeSlider"  class="slider"  type="range"  min="1" max="10" step="1" /></td>
-                        <td><input id="solutionSizeDisplay" class="display" type="number" min="1" max="10" step="1" /></td>
-                    </tr>
-                </table>
+        <div id="topContainer">
+            <div id="algorithmOptionsContainer">
+                <div id="algorithmOptionsTitle">Algorithm Options</div>
+    
+                <div id="algorithmOptionsBlock">
+                    <table id="algorithmOptionsTable">
+                        <tr id="chanceToCrossoverBlock">
+                            <td><span>Chance to crossover:</span></td>
+                            <td><input id="chanceToCrossoverSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                            <td><input id="chanceToCrossoverDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                            <td><span>%</span></td>
+                        </tr>
+                        <tr id="chanceToMutateBlock">
+                            <td><span>Chance to mutate:</span></td>
+                            <td><input id="chanceToMutateSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                            <td><input id="chanceToMutateDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                            <td><span>%</span></td>
+                        </tr>
+                        <tr id="chanceToGoUpBlock">
+                            <td><span>Chance to go up:</span></td>
+                            <td><input id="chanceToGoUpSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
+                            <td><input id="chanceToGoUpDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
+                            <td><span>%</span></td>
+                        </tr>
+                        <tr id="chanceToGoDownBlock">
+                            <td><span>Chance to go down:</span></td>
+                            <td><input id="chanceToGoDownSlider"  class="slider"  type="range"  min="0" max="100" step="1" /></td>
+                            <td><input id="chanceToGoDownDisplay" class="display" type="number" min="0" max="100" step="1" /></td>
+                            <td><span>%</span></td>
+                        </tr>
+                        <tr id="minimumChangeBlock">
+                            <td><span>Minimum change:</span></td>
+                            <td><input id="minimumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
+                            <td><input id="minimumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
+                        </tr>
+                        <tr id="maximumChangeBlock">
+                            <td><span>Maximum change:</span></td>
+                            <td><input id="maximumChangeSlider"  class="slider"  type="range"  min="0.1" max="10" step="0.1" /></td>
+                            <td><input id="maximumChangeDisplay" class="display" type="number" min="0.1" max="10" step="0.1" /></td>
+                        </tr>
+                        <tr id="decimalPlacesBlock">
+                            <td><span>Decimal places:</span></td>
+                            <td><input id="decimalPlacesSlider"  class="slider"  type="range"  min="0" max="5" step="1" /></td>
+                            <td><input id="decimalPlacesDisplay" class="display" type="number" min="0" max="5" step="1" /></td>
+                            <td><span>decimal places</span></td>
+                        </tr>
+                        <tr id="populationSizeBlock">
+                            <td><span>Population size:</span></td>
+                            <td><input id="populationSizeSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                            <td><input id="populationSizeDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                        </tr>
+                        <tr id="solutionSizeBlock">
+                            <td><span>Solution size:</span></td>
+                            <td><input id="solutionSizeSlider"  class="slider"  type="range"  min="1" max="10" step="1" /></td>
+                            <td><input id="solutionSizeDisplay" class="display" type="number" min="1" max="10" step="1" /></td>
+                        </tr>
+                        <tr id="cullSizeBlock">
+                            <td><span>Cull population to:</span></td>
+                            <td><input id="cullSizeSlider"  class="slider"  type="range"  min="1" max="10" step="1" /></td>
+                            <td><input id="cullSizeDisplay" class="display" type="number" min="1" max="10" step="1" /></td>
+                            <td><span>solutions</span></td>
+                        </tr>
+                        <tr id="simulationSpeedBlock">
+                            <td><span>Simulation speed:</span></td>
+                            <td><input id="simulationSpeedSlider"  class="slider"  type="range"  min="1" max="100" step="1" /></td>
+                            <td><input id="simulationSpeedDisplay" class="display" type="number" min="1" max="100" step="1" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+    
+            <div id="fitnessFunctionContainer">
+                <div id="fitnessFunctionTitle">Fitness Function Options</div>
+    
+                <div id="fitnessFunctionOptionsBlock">
+                    <table id="fitnessFunctionOptionsTable">
+    
+                    </table>
+                </div>
+    
+                <br />
+    
+                <div id="fitnessFunctionBlock">
+                    <span>\( f(x) = \)</span>
+                    <span id="fitnessFunctionDisplayBlock">
+    
+                    </span>
+                </div>
             </div>
         </div>
 
-        <div id="fitnessFunctionContainer">
-            <div id="fitnessFunctionTitle">Fitness Function Options</div>
+        <br class="clear" />
 
-            <div id="fitnessFunctionOptionsBlock">
-                <table id="fitnessFunctionOptionsTable">
+        <div id="buttonsContainer">
+            <div id="buttonsTitle">Buttons</div>
 
-                </table>
+            <div id="buttonsBlock">
+                <svg id="generateInitialPopulationButton" class="button" viewBox="0 0 16 16">
+                    <path d="M 13.65 2.35 C 12.2 0.9 10.21 0 8 0 A 8 8 0 0 0 0 8 A 8 8 0 0 0 8 16 C 11.73 16 14.84 13.45 15.73 10 H 13.65 C 12.83 12.33 10.61 14 8 14 A 6 6 0 0 1 2 8 A 6 6 0 0 1 8 2 C 9.66 2 11.14 2.69 12.22 3.78 L 9 7 H 16 V 0 L 13.65 2.35 Z" />
+                </svg>
+                <svg id="playButton" class="button" viewBox="0 0 3 4">
+                    <path d="M 0 0 L 3 2 L 0 4 L 0 0" />
+                </svg>
+                <svg id="pauseButton" class="button" viewBox="0 0 6 7">
+                    <path d="M 0 0 L 2 0 L 2 7 L 0 7 L 0 0 M 4 0 L 6 0 L 6 7 L 4 7 L 4 0" />
+                </svg>
+                <svg id="stepButton" class="button" viewBox="0 0 7.25 7">
+                    <path d="M 0 0 L 1 0 L 1 7 L 0 7 L 0 0 M 2 0 L 7.25 3.5 L 2 7 L 2 0" />
+                </svg>
+                <svg id="stopButton" class="button" viewBox="0 0 1 1">
+                    <path d="M 0 0 L 1 0 L 1 1 L 0 1 L 0 0" />
+                </svg>
             </div>
+        </div>
 
-            <br />
+        <div id="populationContainer">
+            <div id="populationTitle">Population</div>
 
-            <div id="fitnessFunctionBlock">
-                <span>\( f(x) = \)</span>
-                <span id="fitnessFunctionDisplayBlock">
-
-                </span>
+            <div id="populationBlock">
+                <table id="populationTable">
+                </table>
             </div>
         </div>
 

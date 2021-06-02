@@ -67,9 +67,53 @@ $button-gradient: linear-gradient($button-gradient-top, $button-gradient-bottom)
     }
 }
 
-#algorithmOptionsContainer, #fitnessFunctionContainer {
+#topContainer {
+    #algorithmOptionsContainer, #fitnessFunctionContainer {
+        padding: $padding;
+        float: left;
+    }
+}
+
+#buttonsContainer {
     padding: $padding;
-    float: left;
+
+    #buttonsBlock {
+        padding-top: $padding;
+
+        .button {
+            height: 30px;
+            width:  30px;
+
+            margin-right: $padding;
+            
+            fill: white;
+        }
+    }
+}
+
+#populationContainer {
+    padding: $padding;
+
+    #populationBlock {
+        #populationTable {
+            border-collapse: collapse;
+            text-align: center;
+
+            .populationHeader, .solutionBox, .solutionIndex, .xBox, .solutionFitness {
+                border: 1px solid white;
+                padding: 1px 2px;
+            }
+
+            .xBox {
+                width: 50px;
+            }
+        }
+    }
+}
+
+.clear {
+    clear: both;
+    line-height: 0;
 }
 
 .slider {

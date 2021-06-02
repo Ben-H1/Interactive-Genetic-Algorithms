@@ -7,12 +7,21 @@ var maximumChange;
 var decimalPlaces;
 var populationSize;
 var solutionSize;
+var cullSize;
+var simulationSpeed;
 
 var goalSliders;
 var goalDisplays1;
 var goalDisplays2;
 var goals;
 var population;
+
+var interval;
+var running = false;
+var steps = 0;
+
+var populationBoxes = [];
+var fitnessBoxes    = [];
 
 var saveSettingsButton = getById(`saveSettingsButton`);
 var loadSettingsButton = getById(`loadSettingsButton`);
@@ -287,29 +296,39 @@ var maximumChangeSlider     = getById(`maximumChangeSlider`    ); var maximumCha
 var decimalPlacesSlider     = getById(`decimalPlacesSlider`    ); var decimalPlacesDisplay     = getById(`decimalPlacesDisplay`    );
 var populationSizeSlider    = getById(`populationSizeSlider`   ); var populationSizeDisplay    = getById(`populationSizeDisplay`   );
 var solutionSizeSlider      = getById(`solutionSizeSlider`     ); var solutionSizeDisplay      = getById(`solutionSizeDisplay`     );
+var cullSizeSlider          = getById(`cullSizeSlider`         ); var cullSizeDisplay          = getById(`cullSizeDisplay`         );
+var simulationSpeedSlider   = getById(`simulationSpeedSlider`  ); var simulationSpeedDisplay   = getById(`simulationSpeedDisplay`  );
 
-chanceToCrossoverSlider.addEventListener(`input`, (event) => { updateDisplay(chanceToCrossoverDisplay, event.target.value                                             ); chanceToCrossover = event.target.value;                                        });
-chanceToMutateSlider   .addEventListener(`input`, (event) => { updateDisplay(chanceToMutateDisplay   , event.target.value                                             ); chanceToMutate    = event.target.value;                                        });
-chanceToGoUpSlider     .addEventListener(`input`, (event) => { updateDisplay(chanceToGoUpDisplay     , event.target.value, chanceToGoDownSlider, chanceToGoDownDisplay); chanceToGoUp      = event.target.value; chanceToGoDown = 100 - chanceToGoUp;   });
-chanceToGoDownSlider   .addEventListener(`input`, (event) => { updateDisplay(chanceToGoDownDisplay   , event.target.value, chanceToGoUpSlider  , chanceToGoUpDisplay  ); chanceToGoDown    = event.target.value; chanceToGoUp   = 100 - chanceToGoDown; });
-minimumChangeSlider    .addEventListener(`input`, (event) => { updateDisplay(minimumChangeDisplay    , makeDecimal(event.target.value)                                ); minimumChange     = event.target.value; checkMinAndMax();                      });
-maximumChangeSlider    .addEventListener(`input`, (event) => { updateDisplay(maximumChangeDisplay    , makeDecimal(event.target.value)                                ); maximumChange     = event.target.value; checkMinAndMax2();                     });
-decimalPlacesSlider    .addEventListener(`input`, (event) => { updateDisplay(decimalPlacesDisplay    , event.target.value                                             ); decimalPlaces     = event.target.value; updateDecimalPlaces();                 });
-populationSizeSlider   .addEventListener(`input`, (event) => { updateDisplay(populationSizeDisplay   , event.target.value                                             ); populationSize    = event.target.value;                                        });
-solutionSizeSlider     .addEventListener(`input`, (event) => { updateDisplay(solutionSizeDisplay     , event.target.value                                             ); solutionSize      = event.target.value; refreshGoalBlock();                    });
+chanceToCrossoverSlider.addEventListener(`input`, (event) => { updateDisplay(chanceToCrossoverDisplay, event.target.value                                             ); chanceToCrossover = event.target.value;                                               });
+chanceToMutateSlider   .addEventListener(`input`, (event) => { updateDisplay(chanceToMutateDisplay   , event.target.value                                             ); chanceToMutate    = event.target.value;                                               });
+chanceToGoUpSlider     .addEventListener(`input`, (event) => { updateDisplay(chanceToGoUpDisplay     , event.target.value, chanceToGoDownSlider, chanceToGoDownDisplay); chanceToGoUp      = event.target.value; chanceToGoDown = 100 - chanceToGoUp;          });
+chanceToGoDownSlider   .addEventListener(`input`, (event) => { updateDisplay(chanceToGoDownDisplay   , event.target.value, chanceToGoUpSlider  , chanceToGoUpDisplay  ); chanceToGoDown    = event.target.value; chanceToGoUp   = 100 - chanceToGoDown;        });
+minimumChangeSlider    .addEventListener(`input`, (event) => { updateDisplay(minimumChangeDisplay    , makeDecimal(event.target.value)                                ); minimumChange     = event.target.value; checkMinAndMax();                             });
+maximumChangeSlider    .addEventListener(`input`, (event) => { updateDisplay(maximumChangeDisplay    , makeDecimal(event.target.value)                                ); maximumChange     = event.target.value; checkMinAndMax2();                            });
+decimalPlacesSlider    .addEventListener(`input`, (event) => { updateDisplay(decimalPlacesDisplay    , event.target.value                                             ); decimalPlaces     = event.target.value; updateDecimalPlaces();                        });
+populationSizeSlider   .addEventListener(`input`, (event) => { updateDisplay(populationSizeDisplay   , event.target.value                                             ); populationSize    = event.target.value; refreshPopulationTable(); setCullMaximum();   });
+solutionSizeSlider     .addEventListener(`input`, (event) => { updateDisplay(solutionSizeDisplay     , event.target.value                                             ); solutionSize      = event.target.value; refreshGoalBlock(); refreshPopulationTable(); });
+cullSizeSlider         .addEventListener(`input`, (event) => { updateDisplay(cullSizeDisplay         , event.target.value                                             ); cullSize          = event.target.value;                                               });
+simulationSpeedSlider  .addEventListener(`input`, (event) => { updateDisplay(simulationSpeedDisplay  , event.target.value                                             ); simulationSpeed   = event.target.value; setSimulationSpeed();                         });
 
-chanceToCrossoverDisplay.addEventListener(`input`, (event) => { updateDisplay(chanceToCrossoverSlider, event.target.value                                             ); chanceToCrossover = event.target.value;                                        });
-chanceToMutateDisplay   .addEventListener(`input`, (event) => { updateDisplay(chanceToMutateSlider   , event.target.value                                             ); chanceToMutate    = event.target.value;                                        });
-chanceToGoUpDisplay     .addEventListener(`input`, (event) => { updateDisplay(chanceToGoUpSlider     , event.target.value, chanceToGoDownDisplay, chanceToGoDownSlider); chanceToGoUp      = event.target.value; chanceToGoDown = 100 - chanceToGoUp;   });
-chanceToGoDownDisplay   .addEventListener(`input`, (event) => { updateDisplay(chanceToGoDownSlider   , event.target.value, chanceToGoUpDisplay  , chanceToGoUpSlider  ); chanceToGoDown    = event.target.value; chanceToGoUp   = 100 - chanceToGoDown; });
-minimumChangeDisplay    .addEventListener(`input`, (event) => { updateDisplay(minimumChangeSlider    , event.target.value                                             ); minimumChange     = event.target.value; checkMinAndMax();                      });
-maximumChangeDisplay    .addEventListener(`input`, (event) => { updateDisplay(maximumChangeSlider    , event.target.value                                             ); maximumChange     = event.target.value; checkMinAndMax2();                     });
-decimalPlacesDisplay    .addEventListener(`input`, (event) => { updateDisplay(decimalPlacesSlider    , event.target.value                                             ); decimalPlaces     = event.target.value; updateDecimalPlaces();                 });
-populationSizeDisplay   .addEventListener(`input`, (event) => { updateDisplay(populationSizeSlider   , event.target.value                                             ); populationSize    = event.target.value;                                        });
-solutionSizeDisplay     .addEventListener(`input`, (event) => { updateDisplay(solutionSizeSlider     , event.target.value                                             ); solutionSize      = event.target.value; refreshGoalBlock();                    });
+chanceToCrossoverDisplay.addEventListener(`input`, (event) => { updateDisplay(chanceToCrossoverSlider, event.target.value                                             ); chanceToCrossover = event.target.value;                                               });
+chanceToMutateDisplay   .addEventListener(`input`, (event) => { updateDisplay(chanceToMutateSlider   , event.target.value                                             ); chanceToMutate    = event.target.value;                                               });
+chanceToGoUpDisplay     .addEventListener(`input`, (event) => { updateDisplay(chanceToGoUpSlider     , event.target.value, chanceToGoDownDisplay, chanceToGoDownSlider); chanceToGoUp      = event.target.value; chanceToGoDown = 100 - chanceToGoUp;          });
+chanceToGoDownDisplay   .addEventListener(`input`, (event) => { updateDisplay(chanceToGoDownSlider   , event.target.value, chanceToGoUpDisplay  , chanceToGoUpSlider  ); chanceToGoDown    = event.target.value; chanceToGoUp   = 100 - chanceToGoDown;        });
+minimumChangeDisplay    .addEventListener(`input`, (event) => { updateDisplay(minimumChangeSlider    , event.target.value                                             ); minimumChange     = event.target.value; checkMinAndMax();                             });
+maximumChangeDisplay    .addEventListener(`input`, (event) => { updateDisplay(maximumChangeSlider    , event.target.value                                             ); maximumChange     = event.target.value; checkMinAndMax2();                            });
+decimalPlacesDisplay    .addEventListener(`input`, (event) => { updateDisplay(decimalPlacesSlider    , event.target.value                                             ); decimalPlaces     = event.target.value; updateDecimalPlaces();                        });
+populationSizeDisplay   .addEventListener(`input`, (event) => { updateDisplay(populationSizeSlider   , event.target.value                                             ); populationSize    = event.target.value; refreshPopulationTable(); setCullMaximum();   });
+solutionSizeDisplay     .addEventListener(`input`, (event) => { updateDisplay(solutionSizeSlider     , event.target.value                                             ); solutionSize      = event.target.value; refreshGoalBlock(); refreshPopulationTable(); });
+cullSizeDisplay         .addEventListener(`input`, (event) => { updateDisplay(cullSizeSlider         , event.target.value                                             ); cullSize          = event.target.value;                                               });
+simulationSpeedDisplay  .addEventListener(`input`, (event) => { updateDisplay(simulationSpeedSlider  , event.target.value                                             ); simulationSpeed   = event.target.value; setSimulationSpeed();                         });
 
 function getById(id) {
     return document.querySelector(`#${id}`);
+}
+
+function createElement(tag) {
+    return document.createElement(tag);
 }
 
 function makeDecimal(value) {
@@ -348,6 +367,24 @@ function checkMinAndMax2() {
         minimumChange = maximumChange;
         updateDisplay(maximumChangeSlider, maximumChange);
         updateDisplay(minimumChangeSlider, minimumChange); updateDisplay(minimumChangeDisplay, makeDecimal(minimumChange));
+    }
+}
+
+function setCullMaximum() {
+    cullSizeSlider.max  = populationSize;
+    cullSizeDisplay.max = populationSize;
+
+    if (parseInt(cullSize) > parseInt(populationSize)) {
+        cullSize = populationSize;
+        updateDisplay(cullSizeSlider,  cullSize);
+        updateDisplay(cullSizeDisplay, cullSize);
+    }
+}
+
+function setSimulationSpeed() {
+    if (running) {
+        clearInterval(interval);
+        interval = setInterval(runSimulation, getCorrectSpeed(simulationSpeed));
     }
 }
 
@@ -397,6 +434,8 @@ function setInitialValues() {
     decimalPlaces     = 1  ;
     populationSize    = 10 ;
     solutionSize      = 5  ;
+    cullSize          = 1  ;
+    simulationSpeed   = 100;
 }
 
 function updateAllDisplays() {
@@ -409,6 +448,8 @@ function updateAllDisplays() {
     updateDisplay(decimalPlacesSlider    , decimalPlaces    ); updateDisplay(decimalPlacesDisplay    , decimalPlaces    );
     updateDisplay(populationSizeSlider   , populationSize   ); updateDisplay(populationSizeDisplay   , populationSize   );
     updateDisplay(solutionSizeSlider     , solutionSize     ); updateDisplay(solutionSizeDisplay     , solutionSize     );
+    updateDisplay(cullSizeSlider         , cullSize         ); updateDisplay(cullSizeDisplay         , cullSize         );
+    updateDisplay(simulationSpeedSlider  , simulationSpeed  ); updateDisplay(simulationSpeedDisplay  , simulationSpeed  );
 }
 
 function refreshGoalBlock() {
@@ -434,16 +475,16 @@ function createGoalBlock() {
     var fitnessFunctionDisplayBlock = getById(`fitnessFunctionDisplayBlock`);
 
     for (var i = 0; i < solutionSize; i++) {
-        var row = document.createElement(`tr`);
+        var row = createElement(`tr`);
 
-        var td1 = document.createElement(`td`);
-        var td2 = document.createElement(`td`);
-        var td3 = document.createElement(`td`);
+        var td1 = createElement(`td`);
+        var td2 = createElement(`td`);
+        var td3 = createElement(`td`);
 
-        var goalLabel = document.createElement(`span`);
+        var goalLabel = createElement(`span`);
         goalLabel.innerText = `\\(x_{${i + 1}}\\) goal:`;
         
-        var goalSlider = document.createElement(`input`);
+        var goalSlider = createElement(`input`);
         goalSlider.type = `range`;
         goalSlider.className = `slider`;
         goalSlider.min   = -10;
@@ -451,7 +492,7 @@ function createGoalBlock() {
         goalSlider.step  = 1 / Math.pow(10, decimalPlaces);
         goalSlider.value = 0;
         
-        var goalDisplay1 = document.createElement(`input`);
+        var goalDisplay1 = createElement(`input`);
         goalDisplay1.type = `number`;
         goalDisplay1.className = `display`;
         
@@ -469,7 +510,7 @@ function createGoalBlock() {
 
         fitnessFunctionOptionsTable.appendChild(row);
 
-        var goalDisplay2 = document.createElement(`span`);
+        var goalDisplay2 = createElement(`span`);
         goalDisplay2.className = `mathsDisplay`;
         updateMathsDisplay(goalDisplay2, makeDecimal(goalSlider.value), i);
 
@@ -510,4 +551,275 @@ function updateGoals() {
         var currentSlider = goalSliders[i];
         goals[i] = currentSlider.value;
     }
+}
+
+var populationTable = getById(`populationTable`);
+refreshPopulationTable();
+
+function refreshPopulationTable() {
+    clearPopulationTable();
+    createPopulationTable();
+}
+
+function clearPopulationTable() {
+    populationTable.innerHTML = ``;
+}
+
+function createPopulationTable() {
+    createPopulationTableHeader();
+    createPopulationTableContent();
+}
+
+function createPopulationTableHeader() {
+    var row = createElement(`tr`);
+
+    var index = createElement(`th`);
+    index.className = `populationHeader`;
+    index.innerText = `Index`;
+
+    row.appendChild(index);
+
+    for (var i = 0; i < solutionSize; i++) {
+        var header = createElement(`th`);
+        header.className = `populationHeader`;
+        header.innerText = `\\( x_{${i + 1}} \\)`;
+        row.appendChild(header);
+    }
+
+    var fitness = createElement(`th`);
+    fitness.className = `populationHeader`;
+    fitness.innerText = `Fitness`;
+
+    row.appendChild(fitness);
+
+    populationTable.appendChild(row);
+
+    MathJax.typeset();
+}
+
+function createPopulationTableContent() {
+    clearPopulationBoxes();
+    clearPopulation();
+    resetSteps();
+
+    for (var i = 0; i < populationSize; i++) {
+        var row = createElement(`tr`);
+        row.className = `solutionBox`;
+
+        var index = createElement(`td`);
+        index.className = `solutionIndex`;
+        index.innerText = i + 1;
+        row.appendChild(index);
+
+        var boxes = [];
+
+        for (var j = 0; j < solutionSize; j++) {
+            var box = createElement(`td`);
+            box.className = `xBox`;
+            boxes.push(box);
+            row.appendChild(box);
+        }
+
+        populationBoxes.push(boxes);
+
+        var fitness = createElement(`td`);
+        fitness.className = `solutionFitness`;
+        row.appendChild(fitness);
+
+        fitnessBoxes.push(fitness);
+
+        populationTable.appendChild(row);
+    }
+}
+
+function clearPopulationBoxes() {
+    populationBoxes = [];
+    fitnessBoxes    = [];
+}
+
+function clearPopulation() {
+    population = [];
+}
+
+function resetSteps() {
+    steps = 0;
+}
+
+var generateInitialPopulationButton = getById(`generateInitialPopulationButton`);
+generateInitialPopulationButton.addEventListener(`click`, (event) => { generateInitialPopulation(); });
+
+function generateInitialPopulation() {
+    clearPopulation();
+    resetSteps();
+
+    for (var i = 0; i < populationSize; i++) {
+        var currentSolution = [];
+
+        for (var j = 0; j < solutionSize; j++) {
+            var random = getRandomDecimal(goalSliders[j].min, goalSliders[j].max, decimalPlaces);
+            currentSolution.push(random);
+        }
+
+        population.push(currentSolution);
+    }
+
+    sortPopulationByFitness();
+    updatePopulationDisplay();
+}
+
+function sortPopulationByFitness() {
+    population.sort((a, b) => {
+        return parseFloat(getFitness(a)) > parseFloat(getFitness(b)) ? 1 : -1;
+    });
+}
+
+function updatePopulationDisplay() {
+    for (var i = 0; i < population.length; i++) {
+        var currentSolution = population[i];
+
+        for (var j = 0; j < currentSolution.length; j++) {
+            populationBoxes[i][j].innerText = currentSolution[j];
+        }
+
+        fitnessBoxes[i].innerText = getFitness(currentSolution);
+    }
+}
+
+function getFitness(solution) {
+    var fitness = 0;
+
+    for (var i = 0; i < solution.length; i++) {
+        fitness += +Math.abs(goals[i] - solution[i]).toFixed(decimalPlaces);
+    }
+
+    return fitness.toFixed(decimalPlaces);
+}
+
+function getRandomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function getRandomDecimal(min, max, dp) {
+    min = parseFloat(min);
+    max = parseFloat(max);
+
+    return (Math.random() * (max - min) + min).toFixed(dp);
+}
+
+var playButton  = getById(`playButton`);  playButton .addEventListener(`click`, (event) => { play();  });
+var pauseButton = getById(`pauseButton`); pauseButton.addEventListener(`click`, (event) => { pause(); });
+var stepButton  = getById(`stepButton`);  stepButton .addEventListener(`click`, (event) => { step();  });
+var stopButton  = getById(`stopButton`);  stopButton .addEventListener(`click`, (event) => { stop();  });
+
+function play() {
+    console.log(`play`);
+    if (!running) {
+        interval = setInterval(runSimulation, getCorrectSpeed(simulationSpeed));
+        running = true;
+    }
+}
+
+function getCorrectSpeed(speed) {
+    return (1 / simulationSpeed) * 1000;
+}
+
+function runSimulation() {
+    step();
+
+    if (getFitness(population[0]) == 0) {
+        stop();
+    }
+}
+
+function pause() {
+    console.log(`pause`);
+    clearInterval(interval);
+    running = false;
+}
+
+function stop() {
+    console.log(`stop`);
+    clearInterval(interval);
+    running = false;
+    resetSteps();
+}
+
+function step() {
+    cullPopulation();
+    generateNewPopulation();
+    sortPopulationByFitness();
+    updatePopulationDisplay();
+    steps++;
+}
+
+function cullPopulation() {
+    var newPopulation = [];
+
+    for (var i = 0; i < cullSize; i++) {
+        newPopulation.push(population[i]);
+    }
+
+    population = newPopulation;
+}
+
+function generateNewPopulation() {
+    var newPopulation = [];
+
+    for (var i = 0; i < populationSize; i++) {
+        var randomNumber   = getRandomInteger(0, population.length - 1);
+        var randomSolution = population[randomNumber];
+        var newSolution    = [];
+
+        if (getRandomInteger(1, 100) <= chanceToCrossover) {
+            var randomNumber2   = getRandomInteger(0, population.length - 1);
+            var randomSolution2 = population[randomNumber2];
+
+            newSolution = crossoverSolutions(randomSolution, randomSolution2);
+        } else {
+            newSolution = mutateSolution(randomSolution);
+        }
+
+        newPopulation.push(newSolution);
+    }
+
+    population = newPopulation;
+}
+
+function crossoverSolutions(solution1, solution2) {
+    var newSolution    = [];
+    var crossoverPoint = getRandomInteger(1, solution1.length - 1);
+
+    for (var i = 0; i < crossoverPoint; i++) {
+        newSolution.push(solution1[i]);
+    }
+
+    for (var i = crossoverPoint; i < solution1.length; i++) {
+        newSolution.push(solution2[i]);
+    }
+
+    return newSolution;
+}
+
+function mutateSolution (solution) {
+    var newSolution = [];
+
+    for (var i = 0; i < solution.length; i++) {
+        var current = parseFloat(solution[i]);
+
+        if (getRandomInteger(1, 100) <= chanceToMutate) {
+            var randomAmount = getRandomDecimal(minimumChange, maximumChange, decimalPlaces);
+
+            if (getRandomInteger(1, 100) <= chanceToGoUp) {
+                current += parseFloat(randomAmount);
+            } else {
+                current -= parseFloat(randomAmount);
+            }
+        }
+
+        current = current.toFixed(decimalPlaces);
+
+        newSolution.push(current);
+    }
+
+    return newSolution;
 }

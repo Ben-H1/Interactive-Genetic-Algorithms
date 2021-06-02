@@ -41,9 +41,42 @@ body {
   display: none;
 }
 
-#algorithmOptionsContainer, #fitnessFunctionContainer {
+#topContainer #algorithmOptionsContainer, #topContainer #fitnessFunctionContainer {
   padding: 10px;
   float: left;
+}
+
+#buttonsContainer {
+  padding: 10px;
+}
+#buttonsContainer #buttonsBlock {
+  padding-top: 10px;
+}
+#buttonsContainer #buttonsBlock .button {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  fill: white;
+}
+
+#populationContainer {
+  padding: 10px;
+}
+#populationContainer #populationBlock #populationTable {
+  border-collapse: collapse;
+  text-align: center;
+}
+#populationContainer #populationBlock #populationTable .populationHeader, #populationContainer #populationBlock #populationTable .solutionBox, #populationContainer #populationBlock #populationTable .solutionIndex, #populationContainer #populationBlock #populationTable .xBox, #populationContainer #populationBlock #populationTable .solutionFitness {
+  border: 1px solid white;
+  padding: 1px 2px;
+}
+#populationContainer #populationBlock #populationTable .xBox {
+  width: 50px;
+}
+
+.clear {
+  clear: both;
+  line-height: 0;
 }
 
 .slider {
