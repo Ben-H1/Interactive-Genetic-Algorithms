@@ -40,7 +40,26 @@ function saveSettings() {
 }
 
 function constructSettings() {
-    var settings = `hi`;
+    var settings = ``;
+
+    settings += `chanceToCrossover=${chanceToCrossover}\n`;
+    settings += `chanceToMutate=${chanceToMutate}\n`;
+    settings += `chanceToGoUp=${chanceToGoUp}\n`;
+    settings += `chanceToGoDown=${chanceToGoDown}\n`;
+    settings += `minimumChange=${minimumChange}\n`;
+    settings += `maximumChange=${maximumChange}\n`;
+    settings += `decimalPlaces=${decimalPlaces}\n`;
+    settings += `populationSize=${populationSize}\n`;
+    settings += `solutionSize=${solutionSize}\n`;
+    settings += `cullSize=${cullSize}\n`;
+    settings += `simulationSpeed=${simulationSpeed}\n`;
+
+    for (var i = 0; i < goals.length; i++) {
+        settings += `goal${i + 1}=${goalSliders[i].value}`;
+        if (i != goals.length - 1) {
+            settings += `\n`;
+        }
+    }
 
     return settings;
 }
@@ -279,12 +298,195 @@ function loadSettings(event) {
     reader.onload = (e) => {
         deconstructSettings(reader.result);
 	}
-
-    updateAllDisplays();
 }
 
 function deconstructSettings(settings) {
-    console.log(settings);
+    var lines = settings.split(`\n`);
+    var numberOfValidSettings = 0;
+
+    var tempChanceToCrossover = null;
+    var tempChanceToMutate    = null;
+    var tempChanceToGoUp      = null;
+    var tempChanceToGoDown    = null;
+    var tempMinimumChange     = null;
+    var tempMaximumChange     = null;
+    var tempDecimalPlaces     = null;
+    var tempPopulationSize    = null;
+    var tempSolutionSize      = null;
+    var tempCullSize          = null;
+    var tempSimulationSpeed   = null;
+
+    for (var i = 0; i < 11; i++) {
+        var currentLine  = lines[i];
+        var lineParts    = currentLine.split(`=`);
+        var settingName  = lineParts[0];
+        var settingValue = lineParts[1];
+
+        switch (settingName) {
+            case `chanceToCrossover`:
+                tempChanceToCrossover = parseInt(settingValue);
+                break;
+
+            case `chanceToMutate`:
+                tempChanceToMutate = parseInt(settingValue);
+                break;
+
+            case `chanceToGoUp`:
+                tempChanceToGoUp = parseInt(settingValue);
+                break;
+
+            case `chanceToGoDown`:
+                tempChanceToGoDown = parseInt(settingValue);
+                break;
+
+            case `minimumChange`:
+                tempMinimumChange = parseFloat(settingValue);
+                break;
+
+            case `maximumChange`:
+                tempMaximumChange = parseFloat(settingValue);
+                break;
+
+            case `decimalPlaces`:
+                tempDecimalPlaces = parseInt(settingValue);
+                break;
+
+            case `populationSize`:
+                tempPopulationSize = parseInt(settingValue);
+                break;
+
+            case `solutionSize`:
+                tempSolutionSize = parseInt(settingValue);
+                break;
+
+            case `cullSize`:
+                tempCullSize = parseInt(settingValue);
+                break;
+
+            case `simulationSpeed`:
+                tempSimulationSpeed = parseInt(settingValue);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    if (tempChanceToCrossover >= chanceToCrossoverSlider.min && tempChanceToCrossover <= chanceToCrossoverSlider.max) {
+        console.log(`chanceToCrossover`);
+        numberOfValidSettings++;
+    }
+
+    if (tempChanceToMutate >= chanceToMutateSlider.min && tempChanceToMutate <= chanceToMutateSlider.max) {
+        console.log(`chanceToMutate`);
+        numberOfValidSettings++;
+    }
+
+    if (tempChanceToGoUp >= chanceToGoUpSlider.min && tempChanceToGoUp <= chanceToGoUpSlider.max && tempChanceToGoDown == 100 - tempChanceToGoUp) {
+        console.log(`chanceToGoUp`);
+        numberOfValidSettings++;
+    }
+
+    if (tempChanceToGoDown >= chanceToGoDownSlider.min && tempChanceToGoDown <= chanceToGoDownSlider.max && tempChanceToGoUp == 100 - tempChanceToGoDown) {
+        console.log(`chanceToGoDown`);
+        numberOfValidSettings++;
+    }
+
+    if (tempMinimumChange >= minimumChangeSlider.min && tempMinimumChange <= minimumChangeSlider.max && tempMinimumChange <= tempMaximumChange) {
+        console.log(`minimumChange`);
+        numberOfValidSettings++;
+    }
+
+    if (tempMaximumChange >= maximumChangeSlider.min && tempMaximumChange <= maximumChangeSlider.max && tempMaximumChange >= tempMinimumChange) {
+        console.log(`maximumChange`);
+        numberOfValidSettings++;
+    }
+
+    if (tempDecimalPlaces >= decimalPlacesSlider.min && tempDecimalPlaces <= decimalPlacesSlider.max) {
+        console.log(`decimalPlaces`);
+        numberOfValidSettings++;
+    }
+
+    if (tempPopulationSize >= populationSizeSlider.min && tempPopulationSize <= populationSizeSlider.max) {
+        console.log(`populationSize`);
+        numberOfValidSettings++;
+    }
+
+    if (tempSolutionSize >= solutionSizeSlider.min && tempSolutionSize <= solutionSizeSlider.max && tempSolutionSize == lines.length - 11) {
+        console.log(`solutionSize`);
+        numberOfValidSettings++;
+    }
+
+    if (tempCullSize >= cullSizeSlider.min && tempCullSize <= cullSizeSlider.max && tempCullSize <= tempSolutionSize) {
+        console.log(`cullSize`);
+        numberOfValidSettings++;
+    }
+
+    if (tempSimulationSpeed >= simulationSpeedSlider.min && tempSimulationSpeed <= simulationSpeedSlider.max) {
+        console.log(`simulationSpeed`);
+        numberOfValidSettings++;
+    }
+
+    console.log(numberOfValidSettings);
+
+    if (numberOfValidSettings != 11) {
+        console.log(`error`);
+        return;
+    }
+
+    var tempGoals = [];
+
+    for (var i = 11; i < lines.length; i++) {
+        var currentLine  = lines[i];
+        var lineParts    = currentLine.split(`=`);
+        var settingName  = lineParts[0];
+        var settingValue = lineParts[1];
+
+        tempGoals.push(parseFloat(settingValue));
+    }
+
+    var numberOfGoals      = lines.length - 11;
+    var numberOfValidGoals = 0;
+
+    for (var i = 0; i < tempGoals.length; i++) {
+        if (tempGoals[i] >= goalSliders[0].min && tempGoals[i] <= goalSliders[0].max) {
+            console.log(tempGoals[i]);
+            numberOfValidGoals++;
+        }
+    }
+
+    console.log(numberOfValidGoals);
+
+    if (numberOfValidGoals != numberOfGoals) {
+        console.log(`error`);
+        return;
+    }
+
+    chanceToCrossover = tempChanceToCrossover;
+    chanceToMutate    = tempChanceToMutate   ;
+    chanceToGoUp      = tempChanceToGoUp     ;
+    chanceToGoDown    = tempChanceToGoDown   ;
+    minimumChange     = tempMinimumChange    ;
+    maximumChange     = tempMaximumChange    ;
+    decimalPlaces     = tempDecimalPlaces    ; updateDecimalPlaces();
+    populationSize    = tempPopulationSize   ; setCullMaximum();
+    solutionSize      = tempSolutionSize     ;
+    cullSize          = tempCullSize         ;
+    simulationSpeed   = tempSimulationSpeed  ;
+
+    refreshGoalBlock();
+
+    for (var i = 0; i < goalSliders.length; i++) {
+        goals[i] = tempGoals[i];
+        updateDisplay(goalSliders[i], goals[i].toFixed(decimalPlaces));
+        updateDisplay(goalDisplays1[i], goals[i].toFixed(decimalPlaces));
+        updateMathsDisplay(goalDisplays2[i], goals[i].toFixed(decimalPlaces), i);
+    }
+
+    MathJax.typeset();
+
+    updateAllDisplays();
+    refreshPopulationTable();
 }
 
 var chanceToCrossoverSlider = getById(`chanceToCrossoverSlider`); var chanceToCrossoverDisplay = getById(`chanceToCrossoverDisplay`);
@@ -557,6 +759,7 @@ var populationTable = getById(`populationTable`);
 refreshPopulationTable();
 
 function refreshPopulationTable() {
+    resetInterval();
     clearPopulationTable();
     createPopulationTable();
 }
@@ -712,7 +915,6 @@ var stepButton  = getById(`stepButton`);  stepButton .addEventListener(`click`, 
 var stopButton  = getById(`stopButton`);  stopButton .addEventListener(`click`, (event) => { stop();  });
 
 function play() {
-    console.log(`play`);
     if (!running) {
         interval = setInterval(runSimulation, getCorrectSpeed(simulationSpeed));
         running = true;
@@ -720,7 +922,7 @@ function play() {
 }
 
 function getCorrectSpeed(speed) {
-    return (1 / simulationSpeed) * 1000;
+    return (1 / speed) * 1000;
 }
 
 function runSimulation() {
@@ -732,16 +934,17 @@ function runSimulation() {
 }
 
 function pause() {
-    console.log(`pause`);
-    clearInterval(interval);
-    running = false;
+    resetInterval();
 }
 
 function stop() {
-    console.log(`stop`);
+    resetInterval();
+    resetSteps();
+}
+
+function resetInterval() {
     clearInterval(interval);
     running = false;
-    resetSteps();
 }
 
 function step() {
