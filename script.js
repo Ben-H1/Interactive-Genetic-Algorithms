@@ -369,6 +369,8 @@ function deconstructSettings(settings) {
         }
     }
 
+    // CHECK MINIMUM CHANGE DECIMAL PLACES
+
     if (tempChanceToCrossover >= chanceToCrossoverSlider.min && tempChanceToCrossover <= chanceToCrossoverSlider.max) {
         numberOfValidSettings++;
     }
