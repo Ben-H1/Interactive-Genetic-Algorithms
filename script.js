@@ -414,6 +414,7 @@ function deconstructSettings(settings) {
     }
 
     if (numberOfValidSettings != 11) {
+        console.error(`Invalid settings file`);
         return;
     }
 
@@ -438,6 +439,7 @@ function deconstructSettings(settings) {
     }
 
     if (numberOfValidGoals != numberOfGoals) {
+        console.error(`Invalid settings file`);
         return;
     }
 
