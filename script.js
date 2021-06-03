@@ -32,7 +32,6 @@ loadSettingsButton.addEventListener(`click`,  (event) => { loadFile.click(); });
 loadFile          .addEventListener(`change`, (event) => { loadSettings(event); });
 
 function saveSettings() {
-    console.log(`save`);
 	var filename = `settings`;
 	var text = constructSettings();
 	var blob = new Blob([text], {type:'text/plain;charset=utf-8'});
@@ -284,8 +283,6 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 function loadSettings(event) {
-    console.log(`load`);
-
     if (event.target.files.length == 0) { 
         return false;
     }
@@ -373,64 +370,50 @@ function deconstructSettings(settings) {
     }
 
     if (tempChanceToCrossover >= chanceToCrossoverSlider.min && tempChanceToCrossover <= chanceToCrossoverSlider.max) {
-        console.log(`chanceToCrossover`);
         numberOfValidSettings++;
     }
 
     if (tempChanceToMutate >= chanceToMutateSlider.min && tempChanceToMutate <= chanceToMutateSlider.max) {
-        console.log(`chanceToMutate`);
         numberOfValidSettings++;
     }
 
     if (tempChanceToGoUp >= chanceToGoUpSlider.min && tempChanceToGoUp <= chanceToGoUpSlider.max && tempChanceToGoDown == 100 - tempChanceToGoUp) {
-        console.log(`chanceToGoUp`);
         numberOfValidSettings++;
     }
 
     if (tempChanceToGoDown >= chanceToGoDownSlider.min && tempChanceToGoDown <= chanceToGoDownSlider.max && tempChanceToGoUp == 100 - tempChanceToGoDown) {
-        console.log(`chanceToGoDown`);
         numberOfValidSettings++;
     }
 
     if (tempMinimumChange >= minimumChangeSlider.min && tempMinimumChange <= minimumChangeSlider.max && tempMinimumChange <= tempMaximumChange) {
-        console.log(`minimumChange`);
         numberOfValidSettings++;
     }
 
     if (tempMaximumChange >= maximumChangeSlider.min && tempMaximumChange <= maximumChangeSlider.max && tempMaximumChange >= tempMinimumChange) {
-        console.log(`maximumChange`);
         numberOfValidSettings++;
     }
 
     if (tempDecimalPlaces >= decimalPlacesSlider.min && tempDecimalPlaces <= decimalPlacesSlider.max) {
-        console.log(`decimalPlaces`);
         numberOfValidSettings++;
     }
 
     if (tempPopulationSize >= populationSizeSlider.min && tempPopulationSize <= populationSizeSlider.max) {
-        console.log(`populationSize`);
         numberOfValidSettings++;
     }
 
     if (tempSolutionSize >= solutionSizeSlider.min && tempSolutionSize <= solutionSizeSlider.max && tempSolutionSize == lines.length - 11) {
-        console.log(`solutionSize`);
         numberOfValidSettings++;
     }
 
     if (tempCullSize >= cullSizeSlider.min && tempCullSize <= cullSizeSlider.max && tempCullSize <= tempSolutionSize) {
-        console.log(`cullSize`);
         numberOfValidSettings++;
     }
 
     if (tempSimulationSpeed >= simulationSpeedSlider.min && tempSimulationSpeed <= simulationSpeedSlider.max) {
-        console.log(`simulationSpeed`);
         numberOfValidSettings++;
     }
 
-    console.log(numberOfValidSettings);
-
     if (numberOfValidSettings != 11) {
-        console.log(`error`);
         return;
     }
 
@@ -450,15 +433,11 @@ function deconstructSettings(settings) {
 
     for (var i = 0; i < tempGoals.length; i++) {
         if (tempGoals[i] >= goalSliders[0].min && tempGoals[i] <= goalSliders[0].max) {
-            console.log(tempGoals[i]);
             numberOfValidGoals++;
         }
     }
 
-    console.log(numberOfValidGoals);
-
     if (numberOfValidGoals != numberOfGoals) {
-        console.log(`error`);
         return;
     }
 
